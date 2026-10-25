@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>YOUR GLOW</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0D0D0D;--panel:#141414;--panel2:#1a1a1a;--line:rgba(255,255,255,.09);--ink:#f4f1ee;--mut:#8e8a90;--red:#C82333;--red2:#DE3345;--ok:#5fb88a;--warn:#d9a441;--bad:#e5707b;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+body{font:15px/1.6 Manrope,system-ui,sans-serif;color:var(--ink);background:radial-gradient(900px 460px at 50% -180px,rgba(200,35,51,.20),transparent 70%),var(--bg);min-height:100vh;padding:20px 16px 28px;overflow-x:hidden}
+h1,h2,.serif{font-family:'Bodoni Moda',Georgia,serif;font-weight:500;letter-spacing:-.01em}
+h1{font-size:clamp(1.9rem,6vw,2.4rem);line-height:1.1}h2{font-size:1.25rem}
+.brand{font:500 1.1rem 'Bodoni Moda',Georgia,serif;letter-spacing:.34em;text-transform:uppercase;text-align:center;padding:10px 0 26px}.brand i{font-style:normal;color:var(--red2)}
+.foot{text-align:center;font-size:.78rem;color:var(--mut);letter-spacing:.12em;margin-top:28px}
+.mut{color:var(--mut)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:30px;animation:rise .5s ease both}
+.auth{max-width:420px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}}
+form,.menu{display:flex;flex-direction:column;gap:14px}
+.f{display:flex;flex-direction:column;gap:6px}.f label{font-size:.8rem;color:var(--mut);letter-spacing:.03em}
+.inp{width:100%;height:48px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:#0b0b0c;color:var(--ink);font:500 .95rem Manrope,sans-serif;transition:border-color .2s,box-shadow .2s}
+.inp::placeholder{color:#5d595f}.inp:focus{outline:none;border-color:var(--red2);box-shadow:0 0 0 3px rgba(222,51,69,.22)}
+.inp.sm{height:34px;width:190px;font-size:.82rem}
+.btn{width:100%;height:48px;background:var(--red);color:#fff;border:1px solid transparent;border-radius:10px;font:600 .95rem Manrope,sans-serif;letter-spacing:.02em;cursor:pointer;transition:background .2s,border-color .2s,transform .1s}
+.btn:hover:not(:disabled){background:var(--red2)}.btn:active:not(:disabled){transform:translateY(1px)}.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--ink)}.btn.ghost:hover:not(:disabled){background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.28)}
+.btn.sm{height:36px;width:auto;padding:0 16px;font-size:.82rem;align-self:flex-start}
+button:focus-visible,select:focus-visible{outline:2px solid var(--red2);outline-offset:2px}
+.lk{background:none;border:0;color:var(--mut);font:inherit;font-size:.85rem;cursor:pointer;padding:8px;align-self:center}.lk:hover{color:var(--ink)}
+.err{background:rgba(229,112,123,.1);border:1px solid rgba(229,112,123,.3);color:#f3b3ba;padding:11px 14px;border-radius:10px;font-size:.88rem}.err[hidden]{display:none}
+.bd{display:inline-flex;align-items:center;gap:7px;font-size:.82rem;font-weight:600}.bd:before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+.bar{height:4px;border-radius:4px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;background:var(--red2)}
+.dash{max-width:1040px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.top .rt{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;color:var(--mut);border:1px solid var(--line);border-radius:99px;padding:5px 12px}.tag:before{content:'';width:7px;height:7px;border-radius:50%;background:var(--warn)}.tag.on:before{background:var(--ok)}
+.mini{background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font:600 .78rem Manrope,sans-serif;cursor:pointer;transition:border-color .2s,color .2s}.mini:hover:not(:disabled){border-color:rgba(255,255,255,.3)}.mini.danger:hover:not(:disabled){border-color:var(--bad);color:var(--bad)}.mini:disabled{opacity:.5}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}@media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}.stat small{color:var(--mut);font-size:.78rem}.stat b{display:block;font:500 2rem/1.25 'Bodoni Moda',Georgia,serif}
+.cols{display:grid;gap:16px}@media(min-width:900px){.cols{grid-template-columns:330px 1fr;align-items:start}}
+.cols .panel{padding:24px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px}.tools .inp{flex:1;min-width:160px;height:40px}.tools select.inp{flex:0 0 auto;min-width:0;width:auto}
+.row{display:grid;grid-template-columns:1fr auto;gap:10px 16px;padding:16px 0;border-top:1px solid var(--line)}.row:first-child{border-top:0}
+.row .st{text-align:right;font-size:.85rem}.row .ac{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.nota{border:1px solid var(--line);border-left:3px solid var(--ok);background:var(--panel2);border-radius:10px;padding:14px 16px;font-size:.9rem;display:flex;flex-direction:column;gap:8px;margin-bottom:16px}.nota.err2{border-left-color:var(--bad)}
+.a{display:grid;place-items:center;text-decoration:none}
+.wz{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:14px}.wzt{display:flex;justify-content:space-between;align-items:center;font-size:.82rem}
+.step{display:flex;flex-direction:column;gap:22px}.step.fw{animation:slf .45s ease both}.step.bw{animation:slb .45s ease both}
+@keyframes slf{from{opacity:0;transform:translateX(26px)}}@keyframes slb{from{opacity:0;transform:translateX(-26px)}}
+.opts{display:grid;gap:10px}@media(min-width:520px){.opts{grid-template-columns:1fr 1fr}}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:#101010;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:14px;font:500 .92rem Manrope,sans-serif;cursor:pointer;transition:border-color .2s,background .2s}
+.opt:hover{border-color:rgba(255,255,255,.28)}.opt small{display:block;color:var(--mut);font-weight:400;font-size:.8rem;margin-top:2px}
+.ck{flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid #4a4649;margin-top:2px;display:grid;place-items:center;font-size:11px;transition:.2s}
+.opt.on{border-color:var(--red2);background:rgba(200,35,51,.1)}.opt.on .ck{background:var(--red2);border-color:var(--red2)}.opt.on .ck:after{content:'';width:6px;height:6px;border-radius:50%;background:#fff}
+.nav{display:flex;gap:12px}.nav .btn{flex:1}.gen{text-align:center}
+.bar i.shim{width:40%;animation:shim 1.1s ease-in-out infinite alternate}@keyframes shim{to{transform:translateX(150%)}}
+.pl{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:16px}.pl>*{animation:rise .6s ease both}.pl>*:nth-child(3){animation-delay:.08s}.pl>*:nth-child(4){animation-delay:.16s}.pl>*:nth-child(5){animation-delay:.24s}
+.hero{display:flex;flex-direction:column;gap:12px}#pg{display:flex;flex-direction:column;gap:12px}.big{font-size:2.6rem;line-height:1}
+.gg{display:grid;gap:12px;margin-top:14px}@media(min-width:760px){.gg{grid-template-columns:1fr 1fr}}
+.gc{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:16px}.gc h3{font:600 .9rem Manrope,sans-serif;margin-bottom:8px}.gc ul{padding-left:18px;color:#cfcbcd;font-size:.88rem;display:grid;gap:6px}
+.wks{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.wk{background:transparent;color:var(--mut);border:1px solid var(--line);border-radius:99px;padding:7px 16px;font:600 .8rem Manrope,sans-serif;cursor:pointer;transition:.2s}.wk.on{background:var(--red);border-color:var(--red);color:#fff}
+.wh{margin-bottom:12px}.wh h3{font:500 1.1rem 'Bodoni Moda',Georgia,serif}
+.dia{border:1px solid var(--line);border-radius:12px;background:var(--panel2);overflow:hidden}.dia+.dia{margin-top:8px}.dia.open{border-color:rgba(255,255,255,.2)}
+.dh{display:flex;align-items:center;gap:14px;width:100%;background:none;border:0;color:var(--ink);padding:13px 16px;cursor:pointer;text-align:left;font:inherit}
+.dn{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font:600 .82rem Manrope,sans-serif}.dia.ok .dn{background:var(--red);border-color:var(--red);color:#fff}
+.dt{display:flex;flex-direction:column}.dt small{color:var(--mut);font-size:.78rem}
+.db{padding:4px 16px 16px;display:flex;flex-direction:column;gap:12px;animation:rise .3s ease both}.tn h4{font:600 .78rem Manrope,sans-serif;color:var(--mut);letter-spacing:.08em;margin:6px 0}
+.it{position:relative;background:#101010;border:1px solid var(--line);border-radius:10px;margin-top:6px;transition:border-color .2s,transform .2s}.it:hover{border-color:rgba(255,255,255,.24)}
+.itb{display:flex;gap:12px;align-items:flex-start;width:100%;background:none;border:0;color:var(--ink);padding:11px 12px;font:500 .88rem Manrope,sans-serif;text-align:left;cursor:pointer}
+.it .ck{border-color:var(--red2);color:#fff}.it.dn .ck{background:var(--red2)}.ck svg{width:11px;height:11px;stroke:#fff;stroke-width:3.2;fill:none;stroke-linecap:round;stroke-linejoin:round}.ck svg path{stroke-dasharray:1;stroke-dashoffset:0}
+.it.dn .tx{opacity:.5;text-decoration:line-through}.it.sk .tx{opacity:.4}.it.sk .itb{cursor:default}
+.ia{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:0 12px 10px 42px}
+.alt{font-size:.74rem;font-weight:600;color:var(--warn);border:1px solid rgba(217,164,65,.35);border-radius:99px;padding:2px 10px}
+.hint{font-size:.85rem;color:var(--mut);border-left:2px solid var(--red);padding-left:12px;margin-bottom:14px}
+.falta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.8rem;margin-bottom:14px}
+.chip{display:inline-flex;gap:6px;align-items:center;background:rgba(217,164,65,.1);color:var(--warn);border:1px solid rgba(217,164,65,.35);border-radius:99px;padding:3px 11px;font:600 .78rem Manrope,sans-serif;cursor:pointer}.chip i{font-style:normal;opacity:.7}
+.db .mini{align-self:flex-start}
+.it.pop{animation:flash .8s ease-out}.it.pop .ck{animation:pop .5s cubic-bezier(.2,1.7,.4,1)}.it.pop .ck svg path{animation:draw .38s .1s ease both}.it.pop .tx{animation:dim .6s ease}
+@keyframes flash{0%{box-shadow:0 0 0 0 rgba(222,51,69,.55)}100%{box-shadow:0 0 0 16px rgba(222,51,69,0)}}
+@keyframes pop{0%{transform:scale(.55)}60%{transform:scale(1.3)}100%{transform:scale(1)}}
+@keyframes draw{from{stroke-dashoffset:1}}@keyframes dim{from{opacity:1}}
+.sp{position:absolute;left:21px;top:20px;width:5px;height:5px;border-radius:50%;background:var(--red2);pointer-events:none;animation:spark .7s .1s ease-out both}
+@keyframes spark{0%{opacity:1;transform:rotate(var(--a)) translateX(4px)}100%{opacity:0;transform:rotate(var(--a)) translateX(30px)}}
+.tx.swap{animation:swap .45s ease both}@keyframes swap{from{opacity:0;transform:translateY(8px)}}
+.dia{position:relative}.dia.pop::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 15%,rgba(222,51,69,.3) 50%,transparent 85%);transform:translateX(-100%);animation:sweep .95s ease-out forwards;pointer-events:none}
+@keyframes sweep{to{transform:translateX(100%)}}.dia.pop .dn{animation:pop .6s cubic-bezier(.2,1.7,.4,1)}
+.dia.ent{animation:rise .45s ease both;animation-delay:calc(var(--i)*55ms)}.db.ent{animation:rise .35s ease both}
+.dia,.gc{transition:border-color .25s,transform .25s}.gc:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.22)}.gc{animation:rise .6s ease both}
+.bar i{transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.hero{position:relative;overflow:hidden}.hero:before{content:'';position:absolute;left:0;top:0;height:2px;width:100%;background:linear-gradient(90deg,var(--red2),transparent);transform-origin:left;animation:grow 1.2s .2s ease both}@keyframes grow{from{transform:scaleX(0)}}
+#toast{position:fixed;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;pointer-events:none;z-index:30}
+.toast{background:#1b1b1b;border:1px solid rgba(222,51,69,.55);border-radius:12px;padding:12px 18px;font-size:.88rem;box-shadow:0 10px 40px rgba(0,0,0,.5);animation:toast 3s ease both}
+@keyframes toast{0%{opacity:0;transform:translateY(16px)}10%,86%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(8px)}}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:25}.fp{position:fixed;left:50%;top:42%;width:6px;height:10px;border-radius:2px;opacity:0;animation:fp 1.7s var(--d) cubic-bezier(.15,.7,.3,1) both}
+@keyframes fp{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--x),calc(var(--y) + 90px)) rotate(420deg)}}
+.fin{position:fixed;inset:0;display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;text-align:center;padding:24px;background:rgba(13,13,13,.86);backdrop-filter:blur(6px);pointer-events:auto;animation:fadein .5s ease both}
+.fin h2{font-size:clamp(2rem,7vw,3rem)}.fin p{max-width:38ch}@keyframes fadein{from{opacity:0}}
+.orb{position:relative;width:76px;height:76px;margin:4px auto 6px}.orb i{position:absolute;inset:0;border-radius:50%;border:1px solid var(--red2);opacity:0;animation:ring 2s ease-out infinite}.orb i:nth-child(2){animation-delay:.65s}.orb i:nth-child(3){animation-delay:1.3s}.orb:after{content:'';position:absolute;inset:29px;border-radius:50%;background:var(--red2);box-shadow:0 0 24px var(--red2)}
+@keyframes ring{from{transform:scale(.3);opacity:1}to{transform:scale(1.25);opacity:0}}
+.opt.on{animation:sel .3s ease}@keyframes sel{50%{transform:scale(.985)}}.opt.on .ck:after{animation:pop .35s cubic-bezier(.2,1.7,.4,1)}
+.err.shake{animation:shake .4s ease}@keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.brand i{background:linear-gradient(90deg,var(--red2),#ff8a96,var(--red2));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5s linear infinite}@keyframes shine{to{background-position:-200% 0}}
+body:before{content:'';position:fixed;left:-10%;right:-10%;top:-25%;height:65vh;background:radial-gradient(closest-side,rgba(200,35,51,.13),transparent);z-index:-1;pointer-events:none;animation:drift 16s ease-in-out infinite alternate}@keyframes drift{to{transform:translateX(9%) translateY(6%)}}
+.btn{position:relative;overflow:hidden}.btn:not(:disabled):hover{box-shadow:0 8px 28px -10px rgba(222,51,69,.7)}.mini:active:not(:disabled){transform:scale(.96)}
+.pw{position:relative}.pw .inp{padding-right:88px}.eye{position:absolute;right:6px;top:6px;height:36px;padding:0 12px;background:none;border:0;color:var(--mut);font:600 .78rem Manrope,sans-serif;cursor:pointer}.eye:hover{color:var(--ink)}
+.panel{transition:border-color .3s}.panel:hover{border-color:rgba(255,255,255,.14)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="brand">YOUR <i>GLOW</i></header>
+<main id="app"></main>
+<footer class="foot">© YOUR GLOW</footer>
+<script>
+// ======== CONFIGURAÇÃO (preencha para salvar os dados no Supabase de verdade) ========
+const SUPABASE_URL = '';       // ex.: https://abcdxyz.supabase.co
+const SUPABASE_ANON_KEY = '';  // chave pública (anon / publishable) do projeto
+const PRODUTO_URL = '';        // deixe vazio: a plataforma (questionário e plano) já está neste site
+const CHECKOUT_URL = '';       // link de pagamento/renovação (botão da tela de assinatura inativa)
+// =======================================================================================
+
+const DEMO = !SUPABASE_URL || !SUPABASE_ANON_KEY, SK = 'yg_sessao';
+const MESTRA_SALT = 'yourglow-demo-v1', MESTRA_ITER = 150000, MESTRA_HASH = 'e1784ed75bd69f8dc2c44c9e4e1ac144c210af63e123b99475d9c2aac5a1233f';
+const $ = s => document.querySelector(s), app = $('#app');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const MSG = {
+  credenciais: 'Usuário ou senha incorretos.',
+  expirado: 'O teu acesso de 31 dias expirou. Entre em contacto para renovar!',
+  bloqueado: 'Muitas tentativas seguidas. Aguarda 15 minutos e tenta de novo.',
+  senha_mestra: 'Senha mestra incorreta.',
+  usuario_existe: 'Já existe um cliente com esse usuário. Escolhe outro.',
+  dados_invalidos: 'Preenche todos os campos. A senha precisa de pelo menos 4 caracteres.',
+  nao_encontrado: 'Cliente não encontrado.',
+  config: 'O banco ainda não está configurado. Rode os arquivos SQL (01 e 02) no Supabase.',
+  chave: 'Chave do Supabase inválida. Confira o SUPABASE_ANON_KEY no código.',
+  sem_crypto: 'Este navegador não permite o modo demonstração. Abra o site em HTTPS.',
+  rede: 'Não foi possível conectar. Tenta novamente.'
+};
+
+// Armazenamento: usa o navegador e, se ele bloquear, guarda na memória da página
+const ls = (() => {
+  const mem = {};
+  return {
+    get: k => { try { const v = localStorage.getItem(k); if (v !== null) return v } catch (e) {} return mem[k] ?? null },
+    set: (k, v) => { mem[k] = v; try { localStorage.setItem(k, v) } catch (e) {} },
+    del: k => { delete mem[k]; try { localStorage.removeItem(k) } catch (e) {} }
+  };
+})();
+
+// ---------- Modo Supabase: chama as funções dos arquivos SQL ----------
+async function rpc(fn, args) {
+  let r;
+  try {
+    r = await fetch(SUPABASE_URL + '/rest/v1/rpc/' + fn, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY },
+      body: JSON.stringify(args)
+    });
+  } catch (e) { return { ok: false, erro: 'rede' } }
+  if (r.status === 404) return { ok: false, erro: 'config' };
+  if (r.status === 401 || r.status === 403) return { ok: false, erro: 'chave' };
+  if (!r.ok) return { ok: false, erro: 'rede' };
+  try { const d = await r.json(); return d && typeof d === 'object' ? d : { ok: false, erro: 'rede' } }
+  catch (e) { return { ok: false, erro: 'rede' } }
+}
+const par = (m, u, extra = {}) => ({ p_senha_mestra: m, p_usuario: u, ...extra });
+const supa = {
+  adminVerificar: m => rpc('admin_verificar', { p_senha_mestra: m }),
+  adminCriar: (m, n, u, s) => rpc('admin_criar_cliente', { p_senha_mestra: m, p_nome: n, p_usuario: u, p_senha: s }),
+  listar: m => rpc('admin_listar_clientes', { p_senha_mestra: m }),
+  renovar: (m, u) => rpc('admin_renovar_cliente', par(m, u)),
+  bloquear: (m, u) => rpc('admin_bloquear_cliente', par(m, u)),
+  excluir: (m, u) => rpc('admin_excluir_cliente', par(m, u)),
+  redefinir: (m, u, n) => rpc('admin_redefinir_senha', par(m, u, { p_nova_senha: n })),
+  async login(u, s) {
+    const r = await rpc('cliente_login', { p_usuario: u, p_senha: s });
+    if (r.ok && r.token) { ls.set(SK, r.token); ls.set('yg_user', nu(u)) }
+    return r;
+  },
+  async sessao() { const t = ls.get(SK); return t ? rpc('cliente_sessao', { p_token: t }) : { ok: false, erro: 'sessao' } },
+  async sair() { const t = ls.get(SK); ls.del(SK); ls.del('yg_user'); if (t) await rpc('cliente_logout', { p_token: t }) }
+};
+
+// ---------- Modo demonstração: tudo guardado só neste navegador ----------
+const enc = t => new TextEncoder().encode(t);
+const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+const temCrypto = () => !!(globalThis.crypto && crypto.subtle);
+// PBKDF2-HMAC-SHA256 em JavaScript puro: reserva para navegadores sem crypto.subtle
+const _P = []; for (let n = 2; _P.length < 64; n++) if (_P.every(p => n % p)) _P.push(n);
+const _K = _P.map(p => Math.floor((Math.cbrt(p) % 1) * 4294967296)), _H0 = _P.slice(0, 8).map(p => Math.floor((Math.sqrt(p) % 1) * 4294967296));
+const _rr = (x, n) => (x >>> n) | (x << (32 - n));
+function _comp(st, blk) {
+  const w = new Uint32Array(64); w.set(blk);
+  for (let i = 16; i < 64; i++) { const a = w[i - 15], b = w[i - 2]; w[i] = w[i - 16] + (_rr(a, 7) ^ _rr(a, 18) ^ (a >>> 3)) + w[i - 7] + (_rr(b, 17) ^ _rr(b, 19) ^ (b >>> 10)) }
+  let [a, b, c, d, e, f, g, h] = st;
+  for (let i = 0; i < 64; i++) {
+    const t1 = (h + (_rr(e, 6) ^ _rr(e, 11) ^ _rr(e, 25)) + ((e & f) ^ (~e & g)) + _K[i] + w[i]) | 0, t2 = ((_rr(a, 2) ^ _rr(a, 13) ^ _rr(a, 22)) + ((a & b) ^ (a & c) ^ (b & c))) | 0;
+    h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+  }
+  return Uint32Array.of(st[0] + a, st[1] + b, st[2] + c, st[3] + d, st[4] + e, st[5] + f, st[6] + g, st[7] + h);
+}
+function _hashFrom(st, bytes, prefixLen) {
+  const len = bytes.length, total = Math.ceil((len + 9) / 64) * 64, buf = new Uint8Array(total);
+  buf.set(bytes); buf[len] = 0x80;
+  const bits = (prefixLen + len) * 8, dv = new DataView(buf.buffer);
+  dv.setUint32(total - 4, bits >>> 0); dv.setUint32(total - 8, Math.floor(bits / 4294967296));
+  for (let o = 0; o < total; o += 64) { const blk = new Uint32Array(16); for (let i = 0; i < 16; i++) blk[i] = dv.getUint32(o + i * 4); st = _comp(st, blk) }
+  return st;
+}
+const _bytes = st => { const o = new Uint8Array(32), dv = new DataView(o.buffer); st.forEach((v, i) => dv.setUint32(i * 4, v)); return o };
+function pbkdfJs(pass, salt, iter) {
+  let pk = enc(pass); if (pk.length > 64) pk = _bytes(_hashFrom(Uint32Array.from(_H0), pk, 0));
+  const key = new Uint8Array(64); key.set(pk);
+  const words = x => { const b = new Uint32Array(16); for (let i = 0; i < 16; i++) b[i] = ((x[i * 4] << 24) | (x[i * 4 + 1] << 16) | (x[i * 4 + 2] << 8) | x[i * 4 + 3]) >>> 0; return b };
+  const is = _comp(Uint32Array.from(_H0), words(key.map(b => b ^ 0x36))), os = _comp(Uint32Array.from(_H0), words(key.map(b => b ^ 0x5c)));
+  const hmac = m => _bytes(_hashFrom(os, _bytes(_hashFrom(is, m, 64)), 64));
+  const sb = enc(salt), m0 = new Uint8Array(sb.length + 4); m0.set(sb); m0[sb.length + 3] = 1;
+  let u = hmac(m0); const t = Uint8Array.from(u);
+  for (let i = 1; i < iter; i++) { u = hmac(u); for (let j = 0; j < 32; j++) t[j] ^= u[j] }
+  return hex(t);
+}
+async function pbk(t) {
+  if (temCrypto()) {
+    try {
+      const k = await crypto.subtle.importKey('raw', enc(t), 'PBKDF2', false, ['deriveBits']);
+      return hex(await crypto.subtle.deriveBits({ name: 'PBKDF2', salt: enc(MESTRA_SALT), iterations: MESTRA_ITER, hash: 'SHA-256' }, k, 256));
+    } catch (e) { /* cai na versão em JavaScript */ }
+  }
+  await new Promise(r => setTimeout(r, 40));
+  return pbkdfJs(t, MESTRA_SALT, MESTRA_ITER);
+}
+const sha = async t => {
+  if (temCrypto()) return hex(await crypto.subtle.digest('SHA-256', enc(t)));
+  let h = 5381; for (const c of t) h = ((h * 33) ^ c.charCodeAt(0)) >>> 0; return 'x' + h;
+};
+let dm = '';
+async function guarda(m) {
+  if (m && m === dm) return null;
+  if (await pbk(m) === MESTRA_HASH) { dm = m; return null }
+  return { ok: false, erro: 'senha_mestra' };
+}
+const bd = () => { try { return JSON.parse(ls.get('yg_demo') || '[]') } catch (e) { return [] } };
+const salva = l => ls.set('yg_demo', JSON.stringify(l));
+const nu = u => String(u || '').trim().toLowerCase();
+const demo = {
+  async adminVerificar(m) { return (await guarda(m)) || { ok: true } },
+  async adminCriar(m, nome, usuario, senha) {
+    const g = await guarda(m); if (g) return g;
+    nome = nome.trim(); const u = nu(usuario);
+    if (!nome || !u || senha.length < 4) return { ok: false, erro: 'dados_invalidos' };
+    const l = bd();
+    if (l.some(c => c.usuario === u)) return { ok: false, erro: 'usuario_existe' };
+    const c = { nome, usuario: u, senha: await sha(senha), criado_em: new Date().toISOString(), expira_em: new Date(Date.now() + 31 * 864e5).toISOString() };
+    l.push(c); salva(l);
+    return { ok: true, nome: c.nome, usuario: c.usuario, criado_em: c.criado_em, expira_em: c.expira_em };
+  },
+  async listar(m) {
+    const g = await guarda(m); if (g) return g;
+    return { ok: true, clientes: bd().map(({ nome, usuario, criado_em, expira_em }) => ({ nome, usuario, criado_em, expira_em })) };
+  },
+  async altera(m, u, fn) {
+    const g = await guarda(m); if (g) return g;
+    const l = bd(), c = l.find(x => x.usuario === nu(u));
+    if (!c) return { ok: false, erro: 'nao_encontrado' };
+    const r = await fn(c, l); if (r) return r;
+    salva(l); return { ok: true, expira_em: c.expira_em };
+  },
+  renovar(m, u) { return this.altera(m, u, c => { c.expira_em = new Date(Math.max(Date.now(), +new Date(c.expira_em)) + 31 * 864e5).toISOString() }) },
+  bloquear(m, u) { return this.altera(m, u, c => { c.expira_em = new Date().toISOString(); c.v = (c.v || 0) + 1 }) },
+  excluir(m, u) { return this.altera(m, u, (c, l) => { l.splice(l.indexOf(c), 1) }) },
+  redefinir(m, u, n) {
+    return this.altera(m, u, async c => {
+      if (String(n).length < 4) return { ok: false, erro: 'dados_invalidos' };
+      c.senha = await sha(n); c.v = (c.v || 0) + 1;
+    });
+  },
+  async login(usuario, senha) {
+    const u = nu(usuario), c = bd().find(x => x.usuario === u);
+    if (!c || c.senha !== await sha(senha)) return { ok: false, erro: 'credenciais' };
+    if (Date.now() > new Date(c.expira_em)) return { ok: false, erro: 'expirado' };
+    ls.set(SK, u + '|' + (c.v || 0)); ls.set('yg_user', u);
+    return { ok: true, nome: c.nome, expira_em: c.expira_em };
+  },
+  async sessao() {
+    const [u, v] = String(ls.get(SK) || '').split('|');
+    const c = bd().find(x => x.usuario === u && (x.v || 0) === +v);
+    if (!c) return { ok: false, erro: 'sessao' };
+    if (Date.now() > new Date(c.expira_em)) return { ok: false, erro: 'expirado' };
+    return { ok: true, nome: c.nome, expira_em: c.expira_em };
+  },
+  async sair() { ls.del(SK); ls.del('yg_user') }
+};
+const api = DEMO ? demo : supa;
+const mostrarErro = r => { const e = $('#e'); e.textContent = MSG[r.erro] || MSG.rede; e.hidden = false; e.className = 'err'; void e.offsetWidth; e.className = 'err shake' };
+const base = () => location.href.split('#')[0];
+const dataBR = d => new Date(d).toLocaleDateString('pt-BR');
+const diasAte = d => Math.ceil((new Date(d) - Date.now()) / 864e5);
+
+// ---------- Navegação ----------
+let mestra = '', lista = [], busca = '', filtro = 'todos', ed = null, zap = '', aviso = '', passo = 0;
+const ir = h => { if (location.hash === '#' + h) rota(); else location.hash = h };
+
+function telaInicio() {
+  app.innerHTML = `<div class="panel auth"><div><h1>Área de acesso</h1><p class="mut" style="margin-top:6px">Escolha como deseja entrar.</p></div>
+  <div class="menu"><button class="btn" id="a">Entrar como assinante</button><button class="btn ghost" id="d">Entrar como ADM</button></div></div>`;
+  $('#a').onclick = () => ir('login');
+  $('#d').onclick = () => ir('admin');
+}
+
+function telaLogin(erro = aviso) {
+  aviso = '';
+  app.innerHTML = `<div class="panel auth"><div><h1>Assinante</h1><p class="mut" style="margin-top:6px">Use o usuário e a senha que você recebeu.</p></div>
+  <form id="f"><div class="f"><label for="u">Usuário</label><input class="inp" id="u" autocomplete="username" autocapitalize="none" required></div>
+  <div class="f"><label for="s">Senha</label><div class="pw"><input class="inp" id="s" type="password" autocomplete="current-password" required><button class="eye" id="ver" type="button">Mostrar</button></div></div>
+  <p class="err" id="e" role="alert"${erro ? '' : ' hidden'}>${esc(erro)}</p>
+  <button class="btn" id="b">Entrar</button></form>
+  <button class="lk" id="v" type="button">Voltar</button></div>`;
+  $('#v').onclick = () => ir('inicio');
+  $('#ver').onclick = () => { const i = $('#s'), v = $('#ver'), oculta = i.type === 'password'; i.type = oculta ? 'text' : 'password'; v.textContent = oculta ? 'Ocultar' : 'Mostrar' };
+  $('#f').onsubmit = async ev => {
+    ev.preventDefault();
+    const b = $('#b'); b.disabled = true; b.textContent = 'Entrando...';
+    const r = await api.login($('#u').value, $('#s').value);
+    if (r.ok) return ir('area');
+    b.disabled = false; b.textContent = 'Entrar'; mostrarErro(r);
+  };
+}
+
+// ---------- Plataforma do assinante ----------
+const chaveP = () => 'yg_plano_' + (ls.get('yg_user') || 'anon');
+const carregarP = () => { try { return JSON.parse(ls.get(chaveP()) || 'null') } catch (e) { return null } };
+const salvarP = () => ls.set(chaveP(), JSON.stringify(P));
+let P = null, PL = null, fx = {}, mostrado = 0;
+// ----- Itens que o assinante pode não ter em casa -----
+const ING = { babosa: 'babosa', cha: 'chá', argila: 'argila', mel: 'mel', iogurte: 'iogurte', frutas: 'abacate ou banana', cacau: 'manteiga de cacau', oleo: 'óleo de coco', sabonete: 'sabonete neutro', bone: 'boné' };
+const HID_G = 'Hidratação com o condicionador que você tem: deixe agir por 20 minutos com uma toalha morna por cima';
+const ALT = {
+  'Passe gel de babosa fino no rosto e no pescoço': [['babosa'], 'Hidrate o rosto e o pescoço com o hidratante simples que você tiver, sem perfume, ou 1 gota de óleo vegetal na pele úmida'],
+  'Hidrate com gel de babosa e uma gota de óleo de girassol': [['babosa'], 'Hidrate com 1 gota de óleo vegetal (girassol, azeite ou coco) na pele ainda úmida'],
+  'Hidrate com gel de babosa': [['babosa'], 'Hidrate com o hidratante simples que você tiver, sem perfume, ou 1 gota de óleo vegetal na pele úmida'],
+  'Lave o rosto com água morna (e sabonete neutro, se a pele pedir)': [['sabonete'], 'Lave o rosto com água morna, sem esfregar, e seque com uma toalha limpa'],
+  'Lave o rosto com água morna e sabonete neutro': [['sabonete'], 'Lave o rosto só com água morna, sem esfregar, e seque com uma toalha limpa'],
+  'Proteja-se do sol: boné, sombra e óculos escuros ao sair': [['bone'], 'Proteja-se do sol: fique na sombra, evite o sol das 10h às 16h e cubra a cabeça com um lenço ou capuz'],
+  'Lave com água morna e passe gel de babosa fino nas áreas inflamadas': [['babosa'], 'Lave com água morna e seque com toalha limpa, sem esfregar'],
+  'Compressa de chá verde frio por 5 minutos e gel de babosa. Nunca esprema espinhas': [['cha', 'babosa'], 'Compressa de água fria com um pano limpo por 5 minutos. Nunca esprema espinhas'],
+  'Proteção de verdade: boné, sombra e óculos. Depois, gel de babosa': [['babosa', 'bone'], 'Proteção de verdade: sombra, lenço ou capuz e evitar o sol das 10h às 16h'],
+  'Compressa fria de camomila e babosa. Não esfolie a mancha': [['cha', 'babosa'], 'Compressa de água fria com um pano limpo. Não esfolie a mancha'],
+  'Gelo de chá de camomila embaixo dos olhos por 1 minuto, com pano fino': [['cha'], 'Gelo comum, ou uma colher gelada, embaixo dos olhos por 1 minuto, com pano fino'],
+  'Lave só com água morna e passe babosa leve': [['babosa'], 'Lave só com água morna e seque sem esfregar'],
+  'Vapor de água morna por 3 minutos, depois sabonete neutro. Seque sem esfregar': [['sabonete'], 'Vapor de água morna por 3 minutos, depois enxágue com água fresca. Seque sem esfregar'],
+  'Passe mel puro ou manteiga de cacau nos lábios': [['mel', 'cacau'], 'Passe um pouco de vaselina ou um fio de óleo vegetal nos lábios', 1],
+  'Hidrate os lábios antes de dormir com manteiga de cacau ou óleo de coco': [['cacau', 'oleo'], 'Hidrate os lábios antes de dormir com vaselina ou um fio de azeite', 1],
+  'Máscara de argila verde por 10 minutos (1 vez na semana)': [['argila'], 'Dia de descanso da pele: só água morna e hidratação simples'],
+  'Máscara suave de iogurte natural por 10 minutos': [['iogurte'], 'Compressa de água fria por 5 minutos e muita sombra hoje'],
+  'Máscara de argila verde por 10 minutos': [['argila'], 'Vapor de água morna por 3 minutos e depois enxágue com água fria'],
+  'Esfoliação leve com aveia e iogurte, sem esfregar forte': [['iogurte'], 'Massagem circular leve só com água morna por 1 minuto, sem esfregar forte'],
+  'Esfoliação leve com mel e açúcar (1 vez); depois hidrate': [['mel'], 'Esfoliação leve com escova de dente macia e úmida (1 vez); depois hidrate'],
+  'Máscara caseira de abacate com mel por 20 minutos': [['frutas', 'mel'], HID_G],
+  'Máscara caseira de banana com mel e azeite por 20 minutos': [['frutas', 'mel'], HID_G],
+  'Hidratação caseira de abacate e mel, alternando com azeite nas pontas': [['frutas', 'mel'], HID_G],
+  'Hidratação caseira de abacate e mel e selagem com óleo de coco nas pontas': [['frutas', 'mel'], HID_G],
+  'Lave com xampu suave, condicionador do meio às pontas e finalize com babosa': [['babosa'], 'Lave com xampu suave, condicionador do meio às pontas e finalize com água fria'],
+  'Lave com xampu suave, condicionador do meio às pontas e finalize com gel de babosa': [['babosa'], 'Lave com xampu suave, condicionador do meio às pontas e finalize com um pouco de condicionador sem enxágue'],
+  'Lave com xampu suave, condicione generosamente e finalize com babosa e uma gota de óleo': [['babosa'], 'Lave com xampu suave, condicione generosamente e finalize com uma gota de óleo ou só com água'],
+  'Esfoliação suave: aveia com iogurte, em círculos leves por 1 minuto': [['iogurte'], 'Esfoliação suave: só água morna e as pontas dos dedos, em círculos leves por 1 minuto'],
+  'Máscara caseira de aveia com iogurte por 10 minutos': [['iogurte'], 'Compressa morna com pano limpo por 5 minutos e hidratação simples']
+};
+
+
+const OPC = {
+  obj: [['glow', 'Glow Up Geral'], ['pele', 'Saúde da Pele'], ['cabelo', 'Cabelo & Cuidados'], ['postura', 'Postura e Presença']],
+  pele: [['oleosa', 'Oleosa'], ['seca', 'Seca'], ['mista', 'Mista'], ['sensivel', 'Sensível']],
+  queixas: [['acne', 'Acne e espinhas'], ['manchas', 'Manchas'], ['olheiras', 'Olheiras'], ['poros', 'Poros dilatados'], ['labios', 'Ressecamento labial']],
+  cabelo: [['liso', 'Liso'], ['ondulado', 'Ondulado'], ['cacheado', 'Cacheado'], ['crespo', 'Crespo']],
+  pref: [['natural', '100% Natural / Caseiro', 'Chás, massagens e receitas naturais'], ['hibrido', 'Híbrido', 'Produtos baratinhos e receitas naturais'], ['produtos', 'Foco em Produtos e Cosméticos', 'Cosméticos para cada necessidade']],
+  orc: [['0', 'R$ 0,00', 'Apenas rotinas gratuitas e naturais'], ['50-100', 'Até R$ 50 a R$ 100', 'Produtos essenciais de farmácia'], ['100-250', 'De R$ 100 a R$ 250', 'Rotina intermediária'], ['250+', 'Acima de R$ 250', 'Linha avançada']],
+  tempo: [['5', '5 a 10 minutos'], ['15', '15 a 30 minutos'], ['30', '30 minutos ou mais']]
+};
+const PASSOS = [
+  { t: 'Boas-vindas', s: 'Vamos conhecer você para montar o seu plano.', c: [{ k: 'nome', tipo: 'txt', l: 'Como podemos te chamar?' }, { k: 'obj', tipo: 'um', l: 'Qual é o seu maior objetivo hoje?' }] },
+  { t: 'Pele e cabelo', s: 'Um diagnóstico rápido do seu ponto de partida.', c: [{ k: 'pele', tipo: 'um', l: 'Qual é o seu tipo de pele?' }, { k: 'queixas', tipo: 'multi', l: 'Quais são as suas principais queixas? Escolha quantas quiser.' }, { k: 'cabelo', tipo: 'um', l: 'Qual é o seu tipo de cabelo?' }] },
+  { t: 'Orçamento e estilo', s: 'Seu plano vai caber no seu bolso e no seu jeito de cuidar.', c: [{ k: 'pref', tipo: 'um', l: 'Qual é a sua preferência de tratamento?' }, { k: 'orc', tipo: 'um', l: 'Qual é o orçamento disponível?' }] },
+  { t: 'Rotina e tempo', s: 'Último passo.', c: [{ k: 'tempo', tipo: 'um', l: 'Quanto tempo por dia você tem para se cuidar?' }] }
+];
+
+// ----- Conteúdo -----
+const SKN = { oleosa: 'gel de limpeza', seca: 'sabonete cremoso', mista: 'gel de limpeza suave', sensivel: 'sabonete sem perfume e sem álcool' };
+const HID = { oleosa: 'hidratante em gel oil-free', seca: 'hidratante em creme com ceramidas', mista: 'hidratante em gel-creme', sensivel: 'hidratante calmante sem perfume' };
+const QX = {
+  acne: { nm: 'Acne e espinhas', act: 1,
+    n: { am: 'Lave com água morna e passe gel de babosa fino nas áreas inflamadas', pm: 'Compressa de chá verde frio por 5 minutos e gel de babosa. Nunca esprema espinhas' },
+    p: { am: 'Use hidratante oil-free e protetor solar sem óleo', pm: 'Aplique o ativo anti-acne (ácido salicílico ou niacinamida) sobre a pele seca' },
+    w: ['Troque a fronha e lave o celular', 'Máscara de argila verde por 10 minutos (1 vez na semana)', 'Mantenha só o que acalmou a pele e compare as fotos'],
+    wp: ['Introduza o ativo em 2 noites na semana', 'Passe para noites alternadas se a pele não irritar', 'Mantenha o ativo. Sem melhora, procure um dermatologista'],
+    g: { n: 'Acne: chá verde para compressa e argila verde para a máscara semanal', 1: 'Acne: sabonete com ácido salicílico de farmácia (ex.: linha Neutrogena)', 2: 'Acne: La Roche-Posay Effaclar Gel e The Ordinary Niacinamida 10% + Zinco 1%', 3: 'Acne: Effaclar Duo+ e, com orientação de dermatologista, adapaleno' } },
+  manchas: { nm: 'Manchas', act: 1,
+    n: { am: 'Proteção de verdade: boné, sombra e óculos. Depois, gel de babosa', pm: 'Compressa fria de camomila e babosa. Não esfolie a mancha' },
+    p: { am: 'Aplique sérum de vitamina C e, por cima, o protetor solar', pm: 'Aplique niacinamida e hidratante. Não esfolie a mancha' },
+    w: ['Reaplique a proteção do sol a cada 3h fora de casa', 'Máscara suave de iogurte natural por 10 minutos', 'Compare as fotos. Mancha que muda de cor ou forma: procure um dermatologista'],
+    wp: ['Use a vitamina C todas as manhãs', 'Inclua a niacinamida à noite', 'Mantenha a rotina. Mancha que muda de cor ou forma: procure um dermatologista'],
+    g: { n: 'Manchas: babosa e iogurte natural (máscara suave) e muita sombra', 1: 'Manchas: protetor solar FPS 50 toque seco todos os dias (ex.: Episol Sec ou Neutrogena Sun Fresh)', 2: 'Manchas: sérum de vitamina C (ex.: Vichy LiftActiv Vitamin C) e niacinamida', 3: 'Manchas: vitamina C 15%, niacinamida e protetor FPS 60 com cor (ex.: La Roche-Posay Anthelios)' } },
+  olheiras: { nm: 'Olheiras', act: 0,
+    n: { am: 'Gelo de chá de camomila embaixo dos olhos por 1 minuto, com pano fino', pm: 'Massagem suave com o dedo anelar, do canto interno para fora, por 1 minuto' },
+    p: { am: 'Aplique creme para os olhos com cafeína', pm: 'Faça a massagem suave e passe o creme para os olhos' },
+    w: ['Durma de 7 a 8h e eleve um pouco a cabeça', 'Reduza o sal à noite e beba água ao longo do dia', 'Compare as fotos. Olheira persistente: converse com um médico (ferro, alergia)'],
+    g: { n: 'Olheiras: chá de camomila gelado e rodelas de pepino', 1: 'Olheiras: gel ou creme para os olhos com cafeína, de farmácia', 2: 'Olheiras: creme para os olhos com cafeína e vitamina K', 3: 'Olheiras: La Roche-Posay Pigmentclar Eyes' } },
+  poros: { nm: 'Poros dilatados', act: 1,
+    n: { am: 'Lave só com água morna e passe babosa leve', pm: 'Vapor de água morna por 3 minutos, depois sabonete neutro. Seque sem esfregar' },
+    p: { am: 'Use gel de limpeza e hidratante oil-free', pm: 'Aplique niacinamida ou ácido salicílico sobre a pele seca' },
+    w: ['Máscara de argila verde por 10 minutos', 'Esfoliação leve com aveia e iogurte, sem esfregar forte', 'Mantenha só o que funcionou'],
+    wp: ['Introduza a niacinamida à noite', 'Ácido salicílico em 2 noites na semana', 'Mantenha a rotina'],
+    g: { n: 'Poros: argila verde e aveia (máscara e esfoliação suave)', 1: 'Poros: gel de limpeza oil-free (ex.: Cetaphil Gel de Limpeza)', 2: 'Poros: The Ordinary Niacinamida 10% + Zinco 1%', 3: 'Poros: sérum de niacinamida e ácido salicílico 2% de marca dermatológica' } },
+  labios: { nm: 'Ressecamento labial', act: 0,
+    n: { am: 'Passe mel puro ou manteiga de cacau nos lábios', pm: 'Hidrate os lábios antes de dormir com manteiga de cacau ou óleo de coco' },
+    p: { am: 'Use protetor labial com FPS', pm: 'Use bálsamo labial nutritivo antes de dormir' },
+    w: ['Beba mais água e evite lamber os lábios', 'Esfoliação leve com mel e açúcar (1 vez); depois hidrate', 'Mantenha a hidratação diária'],
+    g: { n: 'Lábios: mel puro, manteiga de cacau e óleo de coco', 1: 'Lábios: hidratante labial com FPS (ex.: Nivea Lip Care ou Carmed)', 2: 'Lábios: bálsamo labial nutritivo e vaselina à noite', 3: 'Lábios: protetor labial FPS 50 e máscara labial noturna' } }
+};
+const HAIR = {
+  liso: { f: 2, nl: 'Lave com xampu suave e termine com água fria nas pontas', nt: 'Máscara caseira de abacate com mel por 20 minutos', pl: 'Lave com xampu suave e use condicionador só nas pontas', pt: 'Máscara de hidratação (ex.: linha Elseve ou Salon Line)' },
+  ondulado: { f: 3, nl: 'Lave com xampu suave, condicionador do meio às pontas e finalize com babosa', nt: 'Máscara caseira de banana com mel e azeite por 20 minutos', pl: 'Xampu suave, condicionador do meio às pontas e leave-in para finalizar', pt: 'Máscara de hidratação ou nutrição, alternando a cada semana' },
+  cacheado: { f: 3, nl: 'Lave com xampu suave, condicionador do meio às pontas e finalize com gel de babosa', nt: 'Hidratação caseira de abacate e mel, alternando com azeite nas pontas', pl: 'Xampu sem sulfato, condicionador e leave-in para cachos', pt: 'Cronograma capilar de hidratação, nutrição e reconstrução (ex.: Novex Meu Cacho Minha Vida ou Salon Line #TodeCacho)' },
+  crespo: { f: 4, nl: 'Lave com xampu suave, condicione generosamente e finalize com babosa e uma gota de óleo', nt: 'Hidratação caseira de abacate e mel e selagem com óleo de coco nas pontas', pl: 'Xampu sem sulfato, condicionador e leave-in para cabelos crespos', pt: 'Cronograma capilar de hidratação, nutrição e reconstrução com máscara para crespos' }
+};
+const BASEP = {
+  1: ['Limpeza: Cetaphil Gel de Limpeza ou Neutrogena Deep Clean (sabonete facial suave)', 'Hidratação: Neutrogena Hydro Boost Water Gel ou hidratante leve de farmácia', 'Proteção solar: FPS 30+ toque seco (ex.: Neutrogena Sun Fresh ou Episol Sec). Se precisar começar por um item, comece por este'],
+  2: ['Limpeza: La Roche-Posay Effaclar Gel ou Cetaphil Gel de Limpeza', 'Hidratação: hidratante com ceramidas ou ácido hialurônico (ex.: CeraVe ou Neutrogena Hydro Boost)', 'Proteção solar: FPS 50+ toque seco (ex.: Episol Sec ou La Roche-Posay Anthelios)'],
+  3: ['Limpeza: gel de limpeza dermatológico (ex.: La Roche-Posay Effaclar Gel ou CeraVe)', 'Hidratação: creme com ceramidas (ex.: CeraVe) e sérum de ácido hialurônico', 'Proteção solar: FPS 50+ dermatológico (ex.: La Roche-Posay Anthelios)', 'Ativos avançados: vitamina C de manhã e retinol à noite, só com orientação de um dermatologista (evite na gravidez e na amamentação)']
+};
+const NATG = ['Gelo facial: cubos de chá de camomila congelado, passados com um pano fino por 1 minuto', 'Chá de camomila e chá verde: compressas frias ou mornas para acalmar a pele', 'Drenagem com as mãos: movimentos suaves de dentro para fora e de baixo para cima, por 2 minutos', 'Hidratação de babosa: gel de aloe vera puro, direto da folha ou em gel sem álcool', 'Água morna e sabonete neutro em barra, sem perfume', 'Aveia, iogurte natural e mel: máscaras e esfoliação suave'];
+const SEM = [
+  { t: 'Semana 1', f: 'Adaptação, Limpeza e Desintoxicação', d: 'Crie o hábito, limpe a pele sem agredir e reduza o que sobrecarrega o seu corpo.' },
+  { t: 'Semana 2', f: 'Fortalecimento e foco nas queixas principais', d: 'Entram os cuidados direcionados às queixas que você marcou.' },
+  { t: 'Semana 3', f: 'Refinamento, Esfoliação e Postura', d: 'Renovação suave da pele e exercícios para postura e presença.' },
+  { t: 'Semana 4', f: 'Consolidação e manutenção do Glow', d: 'Fixe o que funcionou e monte a rotina que fica com você.' }
+];
+const TEMAS = [
+  ['Reconhecimento', 'Limpeza suave', 'Hidratação', 'Desintoxicação', 'Sono e água', 'Cuidado com o sol', 'Revisão da semana'],
+  ['Foco nas queixas', 'Ativo da noite', 'Hidratação profunda', 'Cuidado direcionado', 'Constância', 'Cabelo e pele', 'Revisão da semana'],
+  ['Esfoliação suave', 'Postura e presença', 'Refinamento', 'Cuidado direcionado', 'Esfoliação suave', 'Postura e presença', 'Revisão da semana'],
+  ['Consolidação', 'Manutenção', 'Brilho do glow', 'Rotina fixa', 'Comparação', 'Autocuidado', 'Fechamento']
+];
+const EXER = ['Prancha: 3 séries de 20 segundos', 'Remada com elástico ou mochila: 3 séries de 12', 'Encoste costas e cabeça na parede por 1 minuto, 3 vezes'];
+const ORCL = { '0': 'R$ 0,00', '50-100': 'R$ 50 a R$ 100', '100-250': 'R$ 100 a R$ 250', '250+': 'acima de R$ 250' };
+
+// ----- Gerador do plano -----
+function gerar(R) {
+  const modo = R.orc === '0' || R.pref === 'natural' ? 'nat' : R.pref === 'hibrido' ? 'hib' : 'prod';
+  const tier = modo === 'prod' ? ({ '50-100': 1, '100-250': 2, '250+': 3 }[R.orc] || 1) : 1;
+  const bp = modo !== 'nat', cp = modo === 'prod';
+  const cap = { '5': [3, 3], '15': [4, 5], '30': [9, 9] }[R.tempo] || [4, 5];
+  const qs = (R.queixas || []).filter(k => QX[k]), H = HAIR[R.cabelo] || HAIR.liso;
+  const dias = [];
+  for (let n = 1; n <= 30; n++) {
+    const w = Math.min(3, (n - 1) / 7 | 0), b = (n - 1) % 7, it = [];
+    const add = (t, o, p, x, pre = '') => { const a = ALT[x]; it.push({ t, o, p, x: pre + x, alt: a ? { ings: a[0], x: pre + a[1], ou: !!a[2] } : null }) };
+    add('AM', 1, 1, bp ? `Limpe o rosto com ${SKN[R.pele]}` : 'Lave o rosto com água morna (e sabonete neutro, se a pele pedir)');
+    add('AM', 3, 2, bp ? `Aplique ${HID[R.pele]}` : 'Passe gel de babosa fino no rosto e no pescoço');
+    add('AM', 4, 1, bp ? 'Passe protetor solar FPS 30+ e reaplique a cada 3h no sol' : 'Proteja-se do sol: boné, sombra e óculos escuros ao sair');
+    add('AM', 9, 4, 'Beba um copo de água ao acordar e mantenha 2 litros ao longo do dia');
+    add('PM', 1, 1, bp ? 'Limpe bem o rosto e remova o protetor solar' : 'Lave o rosto com água morna e sabonete neutro');
+    add('PM', 4, 2, bp ? 'Hidrate com o seu creme da noite' : (R.pele === 'seca' ? 'Hidrate com gel de babosa e uma gota de óleo de girassol' : 'Hidrate com gel de babosa'));
+    add('PM', 9, 4, 'Desligue as telas 30 minutos antes de dormir');
+    if (n === 1) add('AM', 0, 2, 'Tire uma foto do rosto com luz natural, sem filtro, para comparar no fim');
+    else if (n === 30) add('AM', 0, 2, 'Foto final! Compare com a do dia 1 e comemore');
+    else if (n === 28) add('AM', 0, 2, 'Foto de comparação, na mesma luz e ângulo do dia 1');
+    else if (b === 6) add('AM', 0, 2, 'Revisão da semana: tire uma nova foto e anote o que mudou');
+    if (w === 0) {
+      if (n === 1) add('PM', 2, 2, 'Troque a fronha do travesseiro e lave a toalha de rosto');
+      add('PM', 5, 3, n % 2 ? 'Reduza açúcar, frituras e refrigerante hoje' : 'Coma uma fruta a mais e beba bastante água hoje');
+      if (b === 3) add('PM', 5, 3, 'Observe a pele sem tocar nela e anote como reage à rotina');
+    } else {
+      qs.forEach((k, j) => {
+        const c = QX[k];
+        add('AM', 2, 3, (cp ? c.p : c.n).am);
+        if (!cp || !c.act || (n + j) % 2 === 0) add('PM', 3, 2, (cp ? c.p : c.n).pm);
+        if ((b === 2 || b === 5) && n < 28) add('PM', 5, 3, (cp && c.wp ? c.wp : c.w)[w - 1], `${c.nm}: `);
+      });
+      if (R.obj === 'glow' && b % 2 === 0) add('PM', 6, 4, 'Drenagem facial com as mãos por 2 minutos, de dentro para fora');
+      if (R.obj === 'glow' && b % 2 === 1) add('AM', 6, 4, 'Gelo facial por 1 minuto, envolto em pano fino');
+      if (R.obj === 'pele' && b === 4) add('PM', 5, 3, bp && !cp ? 'Máscara caseira de aveia com iogurte por 10 minutos' : cp ? 'Máscara hidratante por 10 minutos' : 'Máscara caseira de aveia com iogurte por 10 minutos');
+    }
+    if (n % H.f === 0 && n < 30) add('PM', 7, 3, cp ? H.pl : H.nl, 'Dia de lavar o cabelo: ');
+    if (b === 6) add('PM', 7, 2, cp ? H.pt : H.nt, 'Tratamento semanal do cabelo: ');
+    if (R.obj === 'cabelo') { add('PM', 8, 3, 'Massageie o couro cabeludo por 3 minutos'); if (b === 2) add('PM', 7, 2, cp ? H.pt : H.nt, 'Tratamento extra do cabelo: ') }
+    const post = R.obj === 'postura';
+    if (w === 2 || post) { add('AM', 5, 3, 'Alongue pescoço e peitoral por 2 minutos e alinhe os ombros'); add('PM', 6, 3, 'Alongue costas e quadril por 3 minutos') }
+    if ((w === 2 && b % 2 === 1) || (post && w >= 1 && b % 2 === 0)) add('PM', 7, 3, EXER[(n / 2 | 0) % 3]);
+    if (w === 2 && (b === 1 || (b === 4 && R.pele !== 'sensivel'))) add('PM', 3.5, 2, cp && tier >= 2 ? 'Esfoliação química suave (ácido lático ou mandélico), só nesta noite e sem outros ativos' : 'Esfoliação suave: aveia com iogurte, em círculos leves por 1 minuto');
+    if (w === 3 && b === 2) add('PM', 5, 3, 'Mantenha só o que funcionou: simplifique sem perder os passos básicos');
+    if (n === 29) add('PM', 5, 2, 'Monte a sua rotina de manutenção: escolha os 3 passos que mais funcionaram');
+    const tur = t => it.filter(x => x.t === t).map((x, i) => ({ ...x, i })).sort((a, c) => a.p - c.p || a.i - c.i).slice(0, cap[t === 'AM' ? 0 : 1]).sort((a, c) => a.o - c.o || a.i - c.i);
+    dias.push({ n, sem: w, tema: n === 30 ? 'Fechamento: seu novo ritual' : TEMAS[w][b], itens: [...tur('AM'), ...tur('PM')].map(x => ({ t: x.t, x: x.x, alt: x.alt })) });
+  }
+  const guia = [];
+  if (modo === 'nat') guia.push({ t: 'Ingredientes e técnicas', i: [...NATG, 'Se um dia puder investir em um único item, escolha um protetor solar simples FPS 30+. Ele muda mais a sua pele do que qualquer receita'] });
+  else if (modo === 'hib') guia.push({ t: 'Produtos essenciais de farmácia', i: BASEP[1] }, { t: 'Receitas e técnicas naturais', i: NATG });
+  else guia.push({ t: 'Rotina base de produtos', i: BASEP[tier] });
+  if (qs.length) guia.push({ t: 'Para as suas queixas', i: qs.map(k => QX[k].g[cp ? tier : 'n']) });
+  guia.push({ t: `Cabelo ${R.cabelo}`, i: [`${cp ? 'Produtos' : 'Receita'}: ${cp ? H.pt : H.nt}`] });
+  const nome = (R.nome || '').trim();
+  const forc = R.orc === '0' && R.pref !== 'natural' ? ' Como o orçamento é R$ 0,00, montamos a versão 100% natural, só com o que você tem em casa.' : '';
+  return {
+    modo, dias, guia,
+    titulo: `Olá, ${nome}!`,
+    texto: `Criamos o seu plano exclusivo de 30 dias. Adaptamos cada etapa para o seu perfil de pele ${R.pele === 'sensivel' ? 'sensível' : R.pele} e considerando o seu investimento selecionado (${ORCL[R.orc]}).${forc} Vamos juntos transformar sua rotina!`,
+    nota: modo === 'nat'
+      ? 'Teste cada receita em uma área pequena antes de usar no rosto. Em caso de dor, inflamação forte ou manchas que mudam, procure um dermatologista.'
+      : 'As marcas são exemplos de referência. Confira preço e disponibilidade e prefira equivalentes com o mesmo ativo. Teste cada produto novo em uma área pequena. Em caso de dor, inflamação forte ou manchas que mudam, procure um dermatologista.'
+  };
+}
+
+// ----- Telas -----
+function telaBloqueio() {
+  app.innerHTML = `<div class="panel auth"><span class="bd bad">Assinatura inativa</span>
+  <div><h1>Acesso bloqueado</h1><p class="mut" style="margin-top:8px">Sua assinatura não está ativa. Para acessar o questionário e seu plano de 30 dias, regularize seu acesso.</p></div>
+  ${CHECKOUT_URL ? `<a class="btn a" href="${esc(CHECKOUT_URL)}">Regularizar acesso</a>` : '<p class="mut" style="font-size:.88rem">Entre em contacto para renovar o seu acesso.</p>'}
+  <button class="lk" id="x" type="button">Sair</button></div>`;
+  $('#x').onclick = async () => { await api.sair(); ir('inicio') };
+}
+
+function telaArea(r) {
+  if (PRODUTO_URL) { location.replace(PRODUTO_URL); return }
+  P = carregarP() || { resp: {}, etapa: 0, gerado: false, feitos: {}, sem: 0, aberto: 0 };
+  P.itm = P.itm || {}; P.falta = P.falta || {};
+  if (!P.resp.nome) P.resp.nome = r.nome;
+  P.exp = r.expira_em; salvarP();
+  if (P.gerado) return telaPainel();
+  wizard(1);
+}
+
+const validoPasso = i => PASSOS[i].c.every(c => c.tipo === 'txt' ? (P.resp[c.k] || '').trim().length > 1 : c.tipo === 'multi' ? (P.resp[c.k] || []).length > 0 : !!P.resp[c.k]);
+const campoHTML = c => {
+  if (c.tipo === 'txt') return `<div class="f"><label for="k_${c.k}">${c.l}</label><input class="inp" id="k_${c.k}" maxlength="30" autocomplete="given-name" value="${esc(P.resp[c.k] || '')}"></div>`;
+  const on = v => c.tipo === 'multi' ? (P.resp[c.k] || []).includes(v) : P.resp[c.k] === v;
+  return `<div class="f"><label>${c.l}</label><div class="opts">${OPC[c.k].map(o => `<button type="button" class="opt${on(o[0]) ? ' on' : ''}" data-k="${c.k}" data-m="${c.tipo === 'multi' ? 1 : 0}" data-v="${o[0]}"><span class="ck"></span><span><b>${o[1]}</b>${o[2] ? `<small>${o[2]}</small>` : ''}</span></button>`).join('')}</div></div>`;
+};
+
+function wizard(dir) {
+  const i = P.etapa, S = PASSOS[i], last = i === PASSOS.length - 1;
+  app.innerHTML = `<div class="wz"><div class="wzt"><span class="mut">Etapa ${i + 1} de ${PASSOS.length}</span><button class="lk" id="x" type="button">Sair</button></div>
+  <div class="bar"><i id="wzb" style="width:${(dir > 0 ? i : i + 2) / PASSOS.length * 100}%"></i></div>
+  <div class="panel step ${dir > 0 ? 'fw' : 'bw'}" id="pas"><div><h1>${S.t}</h1><p class="mut" style="margin-top:6px">${S.s}</p></div>
+  ${S.c.map(campoHTML).join('')}
+  <div class="nav"><button class="btn ghost" id="vb" type="button"${i ? '' : ' disabled'}>Voltar</button><button class="btn" id="nx" type="button">${last ? 'Gerar Meu Glow Up' : 'Continuar'}</button></div></div></div>`;
+  setTimeout(() => { const e = $('#wzb'); if (e && e.style) e.style.width = (i + 1) / PASSOS.length * 100 + '%' }, 30);
+  const nx = $('#nx'); nx.disabled = !validoPasso(i);
+  $('#pas').onclick = ev => {
+    const b = ev.target.closest('.opt'); if (!b) return;
+    const { k, v, m } = b.dataset;
+    if (m === '1') { const a = P.resp[k] = P.resp[k] || [], x = a.indexOf(v); x > -1 ? a.splice(x, 1) : a.push(v); b.classList.toggle('on', x < 0) }
+    else { P.resp[k] = v; document.querySelectorAll(`.opt[data-k="${k}"]`).forEach(e => e.classList.toggle('on', e === b)) }
+    salvarP(); nx.disabled = !validoPasso(i);
+  };
+  const nome = $('#k_nome');
+  if (nome) nome.oninput = () => { P.resp.nome = nome.value; salvarP(); nx.disabled = !validoPasso(i) };
+  nx.onclick = () => { if (!validoPasso(i)) return; if (last) return gerando(); P.etapa++; salvarP(); wizard(1) };
+  $('#vb').onclick = () => { if (P.etapa > 0) { P.etapa--; salvarP(); wizard(-1) } };
+  $('#x').onclick = async () => { await api.sair(); ir('inicio') };
+}
+
+function gerando() {
+  app.innerHTML = `<div class="panel auth gen"><div class="orb"><i></i><i></i><i></i></div><h1>Montando o seu Glow Up</h1><p class="mut" id="gm">Analisando o seu perfil</p><div class="bar"><i class="shim"></i></div></div>`;
+  ['Analisando o seu perfil', 'Ajustando ao seu orçamento', 'Organizando as 4 semanas'].forEach((t, k) => setTimeout(() => { const e = $('#gm'); if (e) e.textContent = t }, k * 700));
+  setTimeout(() => { P.gerado = true; P.feitos = {}; P.itm = {}; P.aberto = 0; P.sem = 0; salvarP(); telaPainel() }, 2200);
+}
+
+const CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" pathLength="1"/></svg>';
+const usaAlt = it => !!it.alt && (it.alt.ou ? it.alt.ings.every(g => P.falta[g]) : it.alt.ings.some(g => P.falta[g]));
+const est = (k, it) => P.itm[k] === 's' ? 's' : (it.alt && P.itm[k] !== 'o' && usaAlt(it)) ? 'a' : 'n';
+const feitoDia = n => PL.dias[n - 1].itens.every((_, i) => P.feitos[n + '.' + i] || P.itm[n + '.' + i] === 's');
+const nDias = () => PL.dias.filter(d => feitoDia(d.n)).length;
+const semOk = w => PL.dias.filter(d => d.sem === w).every(d => feitoDia(d.n));
+
+function itemHTML(n, x, i) {
+  const k = n + '.' + i, e = est(k, x), done = !!P.feitos[k], pop = fx.pop === k, at = `data-d="${n}" data-i="${i}"`;
+  const bt = (act, txt, extra = '') => `<button class="mini" data-act="${act}" ${at} ${extra} type="button">${txt}</button>`;
+  let ac = '';
+  if (x.alt) {
+    if (e === 's') ac = '<span class="alt">Pulada</span>' + bt('desf', 'Desfazer');
+    else if (e === 'a') ac = `<span class="alt">Alternativa sem ${esc(x.alt.ings.filter(g => P.falta[g]).map(g => ING[g]).join(' e '))}</span>` + bt('pular', 'Também não tenho') + bt('orig', 'Usar o original');
+    else if (P.itm[k] === 'o' && usaAlt(x)) ac = bt('alt', 'Usar a alternativa');
+    else ac = x.alt.ou ? bt('falta', 'Não tenho isso', `data-g="${x.alt.ings.join(',')}"`) : x.alt.ings.filter(g => !P.falta[g]).map(g => bt('falta', `Não tenho ${esc(ING[g])}`, `data-g="${g}"`)).join('');
+  }
+  const sp = pop ? [0, 45, 90, 135, 180, 225, 270, 315].map(a => `<i class="sp" style="--a:${a}deg"></i>`).join('') : '';
+  return `<div class="it${done ? ' dn' : ''}${e === 's' ? ' sk' : ''}${pop ? ' pop' : ''}"><button class="itb" ${at} type="button" aria-pressed="${done}"><span class="ck">${done ? CHECK : ''}</span><span class="tx${fx.swap === k ? ' swap' : ''}">${esc(e === 'a' ? x.alt.x : x.x)}</span></button>${sp}${ac ? `<div class="ia">${ac}</div>` : ''}</div>`;
+}
+function diaHTML(d, idx) {
+  const tot = d.itens.length, nf = d.itens.filter((_, i) => P.feitos[d.n + '.' + i] || P.itm[d.n + '.' + i] === 's').length, ab = P.aberto === d.n, ok = nf === tot;
+  const bloco = (t, nome) => {
+    const l = d.itens.map((x, i) => ({ x, i })).filter(o => o.x.t === t);
+    return l.length ? `<div class="tn"><h4>${nome}</h4>${l.map(o => itemHTML(d.n, o.x, o.i)).join('')}</div>` : '';
+  };
+  return `<div class="dia${ok ? ' ok' : ''}${ab ? ' open' : ''}${fx.dia === d.n ? ' pop' : ''}${fx.sem ? ' ent' : ''}" style="--i:${idx}"><button class="dh" data-d="${d.n}" type="button" aria-expanded="${ab}"><span class="dn">${ok ? CHECK : d.n}</span><span class="dt"><b>Dia ${d.n}. ${esc(d.tema)}</b><small>${nf} de ${tot} tarefas</small></span></button>
+  ${ab ? `<div class="db${fx.open === d.n ? ' ent' : ''}">${bloco('AM', 'Manhã (AM)')}${bloco('PM', 'Noite (PM)')}<button class="mini" data-all="${d.n}" type="button">${ok ? 'Desmarcar dia' : 'Marcar dia como concluído'}</button></div>` : ''}</div>`;
+}
+
+function contar(el, de, para) {
+  if (de === para) { el.textContent = String(para); return }
+  let i = 0; const t = setInterval(() => { i++; el.textContent = String(Math.round(de + (para - de) * (i / 8))); if (i >= 8) clearInterval(t) }, 45);
+}
+function pintarCron() {
+  const w = P.sem, n = nDias(), faltas = Object.keys(P.falta);
+  contar($('#pgn'), mostrado, n); mostrado = n;
+  setTimeout(() => { const e = $('#pgi'); if (e && e.style) e.style.width = (n / 30 * 100) + '%' }, 30);
+  $('#cron').innerHTML = `${PL.modo !== 'prod' ? '<p class="hint">Não tem algum ingrediente? Toque em “Não tenho” na tarefa e trocamos por uma alternativa que você já tem em casa.</p>' : ''}
+  ${faltas.length ? `<div class="falta"><span class="mut">Sem estes itens:</span>${faltas.map(g => `<button class="chip" data-act="voltei" data-g="${g}" type="button">${esc(ING[g])} <i>×</i></button>`).join('')}<span class="mut">Toque para avisar que voltou a ter</span></div>` : ''}
+  <div class="wks">${SEM.map((s, k) => `<button class="wk${k === w ? ' on' : ''}" data-s="${k}" type="button">${s.t}</button>`).join('')}</div>
+  <div class="wh"><h3>${SEM[w].f}</h3><p class="mut" style="font-size:.88rem">${SEM[w].d}</p></div>${PL.dias.filter(d => d.sem === w).map(diaHTML).join('')}`;
+  fx = {};
+}
+
+function celebrar(nivel, n) {
+  const el = $('#fx'), tt = $('#toast'); if (!el || !tt) return;
+  const cores = ['#DE3345', '#ffffff', '#ff7a88'];
+  const parts = q => Array.from({ length: q }, (_, i) => { const a = Math.random() * 6.283, r = 90 + Math.random() * 280; return `<i class="fp" style="--x:${Math.cos(a) * r | 0}px;--y:${Math.sin(a) * r * .8 | 0}px;--d:${Math.random() * 140 | 0}ms;background:${cores[i % 3]}"></i>` }).join('');
+  if (nivel === 'final') {
+    el.innerHTML = `<div class="fin"><h2>Glow Up concluído</h2><p class="mut">Você completou os 30 dias. Compare a foto final com a do primeiro dia e celebre.</p><button class="btn sm" id="fk" type="button">Continuar</button></div>${parts(60)}`;
+    const k = $('#fk'); if (k) k.onclick = () => { el.innerHTML = '' };
+    return;
+  }
+  tt.innerHTML = `<div class="toast">${nivel === 'sem' ? `Semana ${n} concluída. Seu glow está se construindo.` : `Dia ${n} concluído. ${30 - nDias() === 1 ? 'Falta 1 dia' : `Faltam ${30 - nDias()} dias`}.`}</div>`;
+  el.innerHTML = parts(nivel === 'sem' ? 26 : 10);
+  setTimeout(() => { tt.innerHTML = ''; el.innerHTML = '' }, 3000);
+}
+
+function telaPainel() {
+  PL = gerar(P.resp); mostrado = 0;
+  if (!P.aberto) { const p = PL.dias.find(d => !feitoDia(d.n)); if (p) { P.aberto = p.n; P.sem = p.sem } }
+  app.innerHTML = `<div class="pl"><div class="top"><span class="bd ok">Assinatura ativa. Acesso até ${dataBR(P.exp)}</span>
+  <div class="rt"><span id="rfb"><button class="mini" id="rf" type="button">Refazer questionário</button></span><button class="mini" id="x" type="button">Sair</button></div></div>
+  <section class="panel hero"><h1>${esc(PL.titulo)}</h1><p style="max-width:62ch;color:#d6d2d4">${esc(PL.texto)}</p></section>
+  <section class="panel" id="pg"><div style="display:flex;align-items:baseline;gap:10px"><b class="serif big" id="pgn">0</b><span class="mut">de 30 dias concluídos</span></div><div class="bar"><i id="pgi" style="width:0%"></i></div></section>
+  <section class="panel"><h2>${PL.modo === 'nat' ? 'Seu guia de ingredientes e técnicas' : 'Seu guia de produtos e receitas'}</h2>
+  <div class="gg">${PL.guia.map((s, k) => `<div class="gc" style="animation-delay:${k * 80}ms"><h3>${esc(s.t)}</h3><ul>${s.i.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>`).join('')}</div><p class="mut" style="font-size:.8rem;margin-top:14px">${esc(PL.nota)}</p></section>
+  <section class="panel"><h2 style="margin-bottom:14px">Seu cronograma de 30 dias</h2><div id="cron"></div></section>
+  ${DEMO ? '<button class="lk" id="pv" type="button">Visualizar tela de bloqueio (teste)</button>' : ''}</div><div id="toast" aria-live="polite"></div><div id="fx" aria-hidden="true"></div>`;
+  pintarCron();
+  $('#cron').onclick = ev => {
+    const g = s => ev.target.closest(s); let b, n0 = 0, a0, s0;
+    const antes = n => { n0 = n; a0 = feitoDia(n); s0 = semOk(PL.dias[n - 1].sem) };
+    if ((b = g('.wk'))) { P.sem = +b.dataset.s; P.aberto = 0; fx = { sem: 1 } }
+    else if ((b = g('.dh'))) { const n = +b.dataset.d; P.aberto = P.aberto === n ? 0 : n; fx = { open: n } }
+    else if ((b = g('.itb'))) {
+      const k = b.dataset.d + '.' + b.dataset.i; if (P.itm[k] === 's') return;
+      antes(+b.dataset.d);
+      if (P.feitos[k]) delete P.feitos[k];
+      else { P.feitos[k] = 1; fx = { pop: k }; try { navigator.vibrate && navigator.vibrate(12) } catch (e) {} }
+    }
+    else if ((b = g('[data-all]'))) { const n = +b.dataset.all; antes(n); const tudo = a0; PL.dias[n - 1].itens.forEach((_, i) => { const k = n + '.' + i; if (P.itm[k] === 's') return; if (tudo) delete P.feitos[k]; else P.feitos[k] = 1 }) }
+    else if ((b = g('[data-act]'))) {
+      const { act, d, i, g: gi } = b.dataset, k = d + '.' + i;
+      if (act === 'falta') { gi.split(',').forEach(x => { P.falta[x] = 1 }); delete P.itm[k] }
+      else if (act === 'pular') { P.itm[k] = 's'; delete P.feitos[k] }
+      else if (act === 'orig') P.itm[k] = 'o';
+      else if (act === 'alt' || act === 'desf') delete P.itm[k];
+      else if (act === 'voltei') delete P.falta[gi];
+      fx = { swap: k };
+    }
+    else return;
+    const fim = n0 && !a0 && feitoDia(n0);
+    if (fim) fx.dia = n0;
+    salvarP(); pintarCron();
+    if (fim) { const w = PL.dias[n0 - 1].sem; if (nDias() === 30) celebrar('final'); else if (!s0 && semOk(w)) celebrar('sem', w + 1); else celebrar('dia', n0) }
+  };
+  $('#x').onclick = async () => { await api.sair(); ir('inicio') };
+  $('#rf').onclick = () => {
+    $('#rfb').innerHTML = '<span class="mut" style="font-size:.8rem">Apagar respostas e progresso?</span> <button class="mini danger" id="rs" type="button">Sim, refazer</button> <button class="mini" id="rn" type="button">Cancelar</button>';
+    $('#rs').onclick = () => { P = { resp: { nome: P.resp.nome }, etapa: 0, gerado: false, feitos: {}, itm: {}, falta: P.falta, sem: 0, aberto: 0, exp: P.exp }; salvarP(); wizard(1) };
+    $('#rn').onclick = () => telaPainel();
+  };
+  const pv = $('#pv'); if (pv) pv.onclick = telaBloqueio;
+}
+
+async function copiar(t) {
+  try { await navigator.clipboard.writeText(t) } catch (e) {
+    const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select();
+    try { document.execCommand('copy') } catch (x) {} a.remove();
+  }
+}
+
+// ---------- Painel ADM ----------
+function situacao(c) {
+  const n = diasAte(c.expira_em);
+  if (new Date(c.expira_em) <= Date.now()) return { k: 'bad', t: 'Vencido', f: 'vencido' };
+  if (n <= 7) return { k: 'warn', t: `Vence em ${n} ${n === 1 ? 'dia' : 'dias'}`, f: 'vencendo' };
+  return { k: 'ok', t: `Ativo, ${n} dias`, f: 'ativo' };
+}
+const msgAcesso = c => `Olá ${c.nome}! O teu acesso foi liberado por 31 dias. Acede a ${base()}#login com o Usuário: ${c.usuario} e Senha: ${c.senha}.`;
+const msgSenha = c => `Olá ${c.nome}! A tua senha foi redefinida. Acede a ${base()}#login com o Usuário: ${c.usuario} e Senha: ${c.senha}.`;
+
+function avisar(tipo, txt, z = '', extra = '') {
+  zap = z;
+  $('#nota').innerHTML = `<div class="nota${tipo === 'err' ? ' err2' : ''}" role="${tipo === 'err' ? 'alert' : 'status'}"><b>${esc(txt)}</b>${extra}${z ? '<button class="btn sm" id="cz" type="button">Copiar mensagem para WhatsApp</button>' : ''}</div>`;
+  const b = $('#cz');
+  if (b) b.onclick = async () => { await copiar(zap); b.textContent = 'Mensagem copiada'; setTimeout(() => { b.textContent = 'Copiar mensagem para WhatsApp' }, 2500) };
+}
+
+const linha = c => {
+  const u = esc(c.usuario), e = ed && ed.u === c.usuario ? ed.t : '';
+  const acoes = e === 'senha'
+    ? `<input class="inp sm" id="ns" placeholder="Nova senha (mín. 4)" autocomplete="off"><button class="mini" data-a="salvasenha" data-u="${u}">Salvar</button><button class="mini" data-a="cancelar">Cancelar</button>`
+    : e === 'excluir'
+    ? `<span class="mut">Excluir ${esc(c.nome)} de vez?</span><button class="mini danger" data-a="confexcluir" data-u="${u}">Sim, excluir</button><button class="mini" data-a="cancelar">Cancelar</button>`
+    : `<button class="mini" data-a="renovar" data-u="${u}">Renovar +31 dias</button><button class="mini" data-a="senha" data-u="${u}">Nova senha</button><button class="mini" data-a="bloquear" data-u="${u}">Bloquear</button><button class="mini danger" data-a="excluir" data-u="${u}">Excluir</button>`;
+  return `<div class="row"><div><b>${esc(c.nome)}</b><br><span class="mut">@${u}</span></div>
+  <div class="st"><span class="bd ${c.s.k}">${esc(c.s.t)}</span><br><span class="mut">até ${dataBR(c.expira_em)}</span></div><div class="ac">${acoes}</div></div>`;
+};
+
+function pintar() {
+  const L = lista.map(c => ({ ...c, s: situacao(c) }));
+  const cont = f => L.filter(c => c.s.f === f).length;
+  $('#stats').innerHTML = [['Clientes', L.length], ['Ativos', L.length - cont('vencido')], ['Vencem em 7 dias', cont('vencendo')], ['Vencidos', cont('vencido')]]
+    .map(([t, n]) => `<div class="stat"><small>${t}</small><b>${n}</b></div>`).join('');
+  const q = busca.trim().toLowerCase();
+  const F = { todos: () => true, ativos: c => c.s.f !== 'vencido', vencendo: c => c.s.f === 'vencendo', vencidos: c => c.s.f === 'vencido' }[filtro];
+  const v = L.filter(c => F(c) && (!q || c.nome.toLowerCase().includes(q) || c.usuario.includes(q)));
+  $('#lista').innerHTML = v.length ? v.map(linha).join('')
+    : `<p class="mut" style="padding:28px 0;text-align:center">${L.length ? 'Nenhum cliente encontrado.' : 'Nenhum cliente cadastrado ainda.'}</p>`;
+}
+
+async function carregar() {
+  const r = await api.listar(mestra);
+  if (!r.ok) { if (r.erro === 'senha_mestra') { mestra = ''; return telaAdmin() } return avisar('err', MSG[r.erro] || MSG.rede) }
+  lista = (r.clientes || []).slice().sort((a, b) => new Date(b.criado_em) - new Date(a.criado_em));
+  pintar();
+}
+
+const cel = x => { x = String(x); if (/^[=+\-@\t\r]/.test(x)) x = "'" + x; return '"' + x.replace(/"/g, '""') + '"' };
+
+function telaAdmin() {
+  if (!mestra) {
+    app.innerHTML = `<div class="panel auth"><span class="tag${DEMO ? '' : ' on'}" style="align-self:flex-start">${DEMO ? 'Modo demonstração' : 'Conectado ao Supabase'}</span><div><h1>Administração</h1><p class="mut" style="margin-top:6px">Digite a senha mestra.</p></div>
+    <form id="f"><div class="f"><label for="m">Senha mestra</label><div class="pw"><input class="inp" id="m" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required><button class="eye" id="ver" type="button">Mostrar</button></div></div>
+    <p class="err" id="e" role="alert" hidden></p>
+    ${DEMO ? '' : '<p class="mut" id="dica" style="font-size:.82rem" hidden>Se você acabou de trocar a senha mestra, rode o arquivo 02_atualizacao.sql no Supabase. Ele grava a nova senha e libera qualquer bloqueio por tentativas.</p>'}
+    <button class="btn" id="b">Entrar</button></form>
+    <button class="lk" id="v" type="button">Voltar</button></div>`;
+    $('#v').onclick = () => ir('inicio');
+    $('#ver').onclick = () => { const i = $('#m'), v = $('#ver'), oculta = i.type === 'password'; i.type = oculta ? 'text' : 'password'; v.textContent = oculta ? 'Ocultar' : 'Mostrar' };
+    $('#f').onsubmit = async ev => {
+      ev.preventDefault();
+      const b = $('#b'), m = $('#m').value.trim(); b.disabled = true; b.textContent = 'Verificando...';
+      const r = await api.adminVerificar(m);
+      if (r.ok) { mestra = m; return telaAdmin() }
+      b.disabled = false; b.textContent = 'Entrar'; mostrarErro(r);
+      const d = $('#dica'); if (d && (r.erro === 'senha_mestra' || r.erro === 'bloqueado')) d.hidden = false;
+    };
+    return;
+  }
+  ed = null; busca = ''; filtro = 'todos';
+  app.innerHTML = `<div class="dash"><div class="top"><h1>Painel administrativo</h1><div class="rt">
+  <span class="tag${DEMO ? '' : ' on'}">${DEMO ? 'Modo demonstração: dados só neste navegador' : 'Dados salvos no Supabase'}</span>
+  <button class="mini" id="q" type="button">Sair do painel</button></div></div>
+  <div id="nota" aria-live="polite"></div><div class="stats" id="stats"></div>
+  <div class="cols"><section class="panel"><h2>Novo cliente</h2><p class="mut" style="margin:4px 0 16px;font-size:.88rem">O acesso dura 31 dias a partir do cadastro.</p>
+  <form id="f"><div class="f"><label for="n">Nome do cliente</label><input class="inp" id="n" required></div>
+  <div class="f"><label for="u">Usuário</label><input class="inp" id="u" autocapitalize="none" autocomplete="off" required></div>
+  <div class="f"><label for="s">Senha (mínimo 4 caracteres)</label><input class="inp" id="s" autocomplete="off" required></div>
+  <p class="err" id="e" role="alert" hidden></p><button class="btn" id="bt">Registar cliente</button></form></section>
+  <section class="panel"><div class="tools"><input class="inp" id="bu" type="search" placeholder="Buscar por nome ou usuário" aria-label="Buscar cliente">
+  <select class="inp" id="fl" aria-label="Filtrar"><option value="todos">Todos</option><option value="ativos">Ativos</option><option value="vencendo">Vencem em 7 dias</option><option value="vencidos">Vencidos</option></select>
+  <button class="mini" id="cv" type="button">Copiar lista (CSV)</button></div><div id="lista"></div></section></div></div>`;
+
+  $('#q').onclick = () => ir('inicio');
+  $('#bu').oninput = e => { busca = e.target.value; pintar() };
+  $('#fl').onchange = e => { filtro = e.target.value; pintar() };
+  $('#cv').onclick = async () => {
+    const linhas = lista.map(c => [c.nome, c.usuario, c.criado_em, c.expira_em, situacao(c).t].map(cel).join(';'));
+    await copiar(['nome;usuario;criado_em;expira_em;situacao', ...linhas].join('\n'));
+    avisar('ok', 'Lista copiada. Cole no Excel ou no Google Planilhas.');
+  };
+  $('#f').onsubmit = async ev => {
+    ev.preventDefault();
+    const b = $('#bt'), e = $('#e'); e.hidden = true; b.disabled = true; b.textContent = 'Guardando...';
+    const senha = $('#s').value, r = await api.adminCriar(mestra, $('#n').value, $('#u').value, senha);
+    b.disabled = false; b.textContent = 'Registar cliente';
+    if (!r.ok) return mostrarErro(r);
+    ev.target.reset(); ed = null;
+    avisar('ok', 'Cliente registado com sucesso!', msgAcesso({ nome: r.nome, usuario: r.usuario, senha }),
+      `<span class="mut">Usuário: ${esc(r.usuario)}<br>Senha: ${esc(senha)}<br>Acesso até: ${new Date(r.expira_em).toLocaleString('pt-BR')}</span>`);
+    await carregar();
+  };
+  $('#lista').onclick = async ev => {
+    const b = ev.target.closest('button[data-a]'); if (!b) return;
+    const a = b.dataset.a, u = b.dataset.u, c = lista.find(x => x.usuario === u);
+    if (a === 'cancelar') { ed = null; return pintar() }
+    if (a === 'senha' || a === 'excluir') { ed = { u, t: a }; pintar(); const i = $('#ns'); if (i) i.focus(); return }
+    b.disabled = true; let r;
+    if (a === 'renovar') {
+      r = await api.renovar(mestra, u);
+      if (r.ok) avisar('ok', `Acesso de ${c.nome} renovado até ${dataBR(r.expira_em)}.`, `Olá ${c.nome}! O teu acesso foi renovado por mais 31 dias, até ${dataBR(r.expira_em)}. Acede a ${base()}#login com o teu usuário e senha de sempre.`);
+    } else if (a === 'bloquear') {
+      r = await api.bloquear(mestra, u);
+      if (r.ok) avisar('ok', `Acesso de ${c.nome} encerrado.`);
+    } else if (a === 'confexcluir') {
+      r = await api.excluir(mestra, u);
+      if (r.ok) avisar('ok', `${c.nome} foi excluído.`);
+    } else if (a === 'salvasenha') {
+      const n = $('#ns').value; r = await api.redefinir(mestra, u, n);
+      if (r.ok) avisar('ok', `Senha de ${c.nome} redefinida.`, msgSenha({ nome: c.nome, usuario: u, senha: n }));
+    }
+    if (!r || !r.ok) { b.disabled = false; return avisar('err', MSG[(r || {}).erro] || MSG.rede) }
+    ed = null; await carregar();
+  };
+  carregar();
+}
+
+async function rota() {
+  const h = location.hash.slice(1) || 'inicio', id = ++passo;
+  if (h !== 'admin') { mestra = ''; lista = [] }
+  if (h === 'admin') return telaAdmin();
+  if (h === 'area' || h === 'login') {
+    const r = await api.sessao();
+    if (id !== passo) return;
+    if (r.ok) return h === 'area' ? telaArea(r) : ir('area');
+    if (r.erro === 'expirado' && h === 'area') return telaBloqueio();
+    if (r.erro === 'sessao' || r.erro === 'expirado') await api.sair();
+    if (id !== passo) return;
+    if (r.erro === 'expirado') aviso = MSG.expirado;
+    else if (r.erro !== 'sessao') aviso = MSG[r.erro] || '';
+    return h === 'area' ? ir('login') : telaLogin();
+  }
+  telaInicio();
+}
+addEventListener('hashchange', rota);
+rota();
+</script>
+</body>
+</html>
